@@ -1,6 +1,8 @@
 const { constants } = require("../Constants");
-const errorHandler = (err, next, res, req) => {
+const errorHandler = (err, req, res, next) => {
   const statusCode = res.statusCode ? res.statusCode : 500;
+
+  res.status(statusCode); // Set the status code for the response
 
   switch (statusCode) {
     case constants.VALIDATION_ERROR:
@@ -9,7 +11,6 @@ const errorHandler = (err, next, res, req) => {
         message: err.message,
         stackTrace: err.stack,
       });
-
       break;
     case constants.NOT_FOUND:
       res.json({
@@ -39,10 +40,10 @@ const errorHandler = (err, next, res, req) => {
         stackTrace: err.stack,
       });
       break;
-
     default:
       console.log("No error, All is well");
       break;
   }
 };
+
 module.exports = errorHandler;
