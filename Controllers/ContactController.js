@@ -26,8 +26,7 @@ const getContact = asyncHandler(async (req, res) => {
 const updateContact = asyncHandler(async (req, res) => {
   const contact = await Contact.findById(req.params.id);
   if (!contact) {
-    res.status(404);
-    throw new Error("Contact not found");
+    res.status(404).json({message :"Contact not found"});
   }
   const updatedContact = await Contact.findByIdAndUpdate(
     req.params.id,
